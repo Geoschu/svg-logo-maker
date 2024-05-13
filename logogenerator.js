@@ -1,0 +1,64 @@
+import inquirer from "inquirer";
+import fs from "fs";
+
+// Define the shapes and colors options
+const shapes = ["Circle", "Triangle", "Square"];
+const colors = ["#FF0000", "#00FF00", "#0000FF"]; // Hexadecimal colors for simplicity
+
+// Function to validate color input
+function isValidColor(color) {
+  return /^#(?:[0-9a-fA-F]{3}){1,2}$/i.test(color);
+}
+
+// Prompt the user for input
+async function askUser() {
+  const answers = await inquirer.prompt([
+    {
+      type: "input",
+      name: "text",
+      message: "Enter up to three characters for the logo text:",
+      validate: (value) =>
+        value.length <= 3 || "Text must be up to three characters long.",
+    },
+    {
+      type: "list",
+      name: "textColor",
+      message: "Select a text color:",
+      choices: colors,
+    },
+    {
+      type: "list",
+      name: "shape",
+      message: "Select a shape:",
+      choices: shapes,
+    },
+    {
+      type: "list",
+      name: "shapeColor",
+      message: "Select a shape color:",
+      choices: colors,
+    },
+  ]);
+
+  // Generate the SVG content based on user input
+  const svgContent = generateSVG(answers);
+
+  // Save the SVG content to a file
+  fs.writeFile("logo.svg", svgContent, (err) => {
+    if (err) throw err;
+    console.log("Generated logo.svg");
+  });
+}
+
+// Function to generate SVG content based on user input
+function generateSVG({ text, textColor, shape, shapeColor }) {
+  let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+                        <rect width="100%" height="100%" fill="${shapeColor}"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}">${text}</text>
+                    </svg>`;
+
+  return svgContent;
+}
+
+// Run the application
+askUser();
