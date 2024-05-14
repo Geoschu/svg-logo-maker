@@ -7,7 +7,20 @@ const colors = ["#FF0000", "#00FF00", "#0000FF"]; // Hexadecimal colors for simp
 
 // Function to validate color input
 function isValidColor(color) {
-  return /^#(?:[0-9a-fA-F]{3}){1,2}$/i.test(color);
+  const colorKeywords = [
+    "red",
+    "green",
+    "blue",
+    "cyan",
+    "magenta",
+    "yellow",
+    "black",
+    "white",
+  ];
+  return (
+    colorKeywords.includes(color.toLowerCase()) ||
+    /^#(?:[0-9a-fA-F]{3}){1,2}$/i.test(color)
+  );
 }
 
 // Prompt the user for input
@@ -21,10 +34,12 @@ async function askUser() {
         value.length <= 3 || "Text must be up to three characters long.",
     },
     {
-      type: "list",
+      type: "input",
       name: "textColor",
-      message: "Select a text color:",
-      choices: colors,
+      message: "Enter a text color (keyword or hexadecimal):",
+      validate: (value) =>
+        isValidColor(value) ||
+        "Color must be a valid keyword or hexadecimal color.",
     },
     {
       type: "list",
@@ -33,10 +48,12 @@ async function askUser() {
       choices: shapes,
     },
     {
-      type: "list",
+      type: "input",
       name: "shapeColor",
-      message: "Select a shape color:",
-      choices: colors,
+      message: "Enter a shape color (keyword or hexadecimal):",
+      validate: (value) =>
+        isValidColor(value) ||
+        "Color must be a valid keyword or hexadecimal color.",
     },
   ]);
 
