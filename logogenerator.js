@@ -52,9 +52,23 @@ async function askUser() {
 
 // Function to generate SVG content based on user input
 function generateSVG({ text, textColor, shape, shapeColor }) {
+  let shapeSVG = "";
+
+  switch (shape) {
+    case "Circle":
+      shapeSVG = `<circle cx="50%" cy="50%" r="50" fill="${shapeColor}"/>`;
+      break;
+    case "Triangle":
+      shapeSVG = `<polygon points="150,25 179,111 221,111 191,165 150,111 109,165 79,111 121,111" fill="${shapeColor}"/>`;
+      break;
+    case "Square":
+      shapeSVG = `<rect width="100" height="100" fill="${shapeColor}"/>`;
+      break;
+  }
+
   let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-                        <rect width="100%" height="100%" fill="${shapeColor}"/>
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}">${text}</text>
+                      ${shapeSVG}
+                      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}">${text}</text>
                     </svg>`;
 
   return svgContent;
