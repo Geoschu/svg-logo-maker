@@ -61,9 +61,9 @@ async function askUser() {
   const svgContent = generateSVG(answers);
 
   // Save the SVG content to a file
-  fs.writeFile("logo.svg", svgContent, (err) => {
+  fs.writeFile(`./examples/logo_${Date.now()}.svg`, svgContent, (err) => {
     if (err) throw err;
-    console.log("Generated logo.svg");
+    console.log("Generated logo.svg in /examples folder");
   });
 }
 
