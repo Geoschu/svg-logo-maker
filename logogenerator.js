@@ -76,7 +76,7 @@ function generateSVG({ text, textColor, shape, shapeColor }) {
       shapeSVG = `<circle cx="50%" cy="50%" r="50" fill="${shapeColor}"/>`;
       break;
     case "Triangle":
-      shapeSVG = `<polygon points="150,25 179,111 221,111 191,165 150,111 109,165 79,111 121,111" fill="${shapeColor}"/>`;
+      shapeSVG = `<polygon points="150,50 100,150 200,150" fill="${shapeColor}"/>`;
       break;
     case "Square":
       shapeSVG = `<rect width="100" height="100" fill="${shapeColor}"/>`;
